@@ -1,3 +1,6 @@
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import QueryProvider from "@/providers/QueryProvider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -22,12 +25,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <QueryProvider>
+          <Header />
+          <div className="grow-0 my-10">
+            {children}
+          </div>
+          <Footer />
+        </QueryProvider>
       </body>
     </html>
   );
