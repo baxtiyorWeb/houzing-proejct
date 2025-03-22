@@ -10,7 +10,7 @@ type UseDeleteQueryProps = {
 const useDeleteQuery = ({ listKeyId = null }: UseDeleteQueryProps) => {
 	const queryClient = useQueryClient();
 
-	const { mutate, isLoading, isError, error } = useMutation({
+	const { mutate, isPending, isError, error } = useMutation({
 		mutationFn: ({ url }: { url: string }) => deleteRequest(url),
 		onSuccess: () => {
 			if (listKeyId) {
@@ -18,13 +18,13 @@ const useDeleteQuery = ({ listKeyId = null }: UseDeleteQueryProps) => {
 			}
 		},
 		onError: error => {
-			console.error('❌ Delete query error:', error);
+			console.error(' Delete query error:', error);
 		},
 	});
 
 	return {
 		mutate,
-		isLoading,
+		isPending, // isLoading o‘rniga
 		isError,
 		error,
 	};

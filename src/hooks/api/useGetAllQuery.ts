@@ -10,12 +10,12 @@ const useGetAllQuery = ({
 	hideErrorMsg = false,
 	enabled = true,
 	options = {
-		onSuccess: res => {
+		onSuccess: (res: null) => {
 			if (showSuccessMsg) {
 				return res;
 			}
 		},
-		onError: data => {
+		onError: (data: null) => {
 			if (!hideErrorMsg) {
 				return data;
 			}

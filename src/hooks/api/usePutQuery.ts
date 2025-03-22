@@ -1,13 +1,20 @@
 import { api } from '@/config/auth/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 type PutRequestProps = {
 	url: string;
-	attributes?: null | undefined;
+	attributes?: Record<string, null> | unknown;
+	config?: AxiosRequestConfig;
 };
 
-const putRequest = ({ url, attributes }: PutRequestProps) =>
-	api.put(url, attributes);
+const putRequest = async ({
+	url,
+	attributes,
+	config = {},
+}: PutRequestProps): Promise<AxiosResponse> => {
+	return api.put(url, attributes, config);
+};
 
 type UsePutQueryProps = {
 	hideSuccessToast?: boolean;
@@ -20,14 +27,18 @@ const usePutQuery = ({
 }: UsePutQueryProps) => {
 	const queryClient = useQueryClient();
 
-	const { mutate, isLoading, isError, error } = useMutation({
-		mutationFn: putRequest, // ✅ `mutationFn` obyekt ichida bo'lishi kerak
+	const { mutate, isPending, isError, error } = useMutation<
+		AxiosResponse,
+		Error,
+		PutRequestProps
+	>({
+		mutationFn: putRequest,
 		onSuccess: data => {
 			if (!hideSuccessToast) {
 				console.log('✅ Success:', data);
 			}
 			if (listKeyId) {
-				queryClient.invalidateQueries({ queryKey: [listKeyId] }); // ✅ v5 usuli
+				queryClient.invalidateQueries({ queryKey: [listKeyId] });
 			}
 		},
 		onError: err => {
@@ -37,7 +48,7 @@ const usePutQuery = ({
 
 	return {
 		mutate,
-		isLoading,
+		isPending,
 		isError,
 		error,
 	};

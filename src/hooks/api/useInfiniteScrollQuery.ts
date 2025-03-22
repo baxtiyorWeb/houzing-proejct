@@ -1,23 +1,35 @@
 import { api } from '@/config/auth/api';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
+interface Elements {
+	[key: string]: null;
+}
+
+interface MetaData {
+	currentPage: number;
+	totalPages: number;
+}
+
+interface ApiResponse {
+	data: null;
+	meta?: MetaData;
+}
+
+interface UseInfiniteScrollQueryProps {
+	key?: string;
+	url?: string;
+	elements?: Elements;
+	initialPageParam?: number;
+	enabled?: boolean;
+}
+
 const useInfiniteScrollQuery = ({
 	key = 'infinite-query',
 	url = '/',
 	elements = {},
-	initialPageParam = 0,
-	showSuccessMsg = false,
-	hideErrorMsg = false,
+	initialPageParam = 1,
 	enabled = true,
-	options = {
-		onSuccess: data => {
-			if (showSuccessMsg) return data;
-		},
-		onError: error => {
-			if (!hideErrorMsg) return error;
-		},
-	},
-}) => {
+}: UseInfiniteScrollQueryProps) => {
 	const {
 		data,
 		fetchNextPage,
@@ -28,29 +40,22 @@ const useInfiniteScrollQuery = ({
 		isError,
 		error,
 		isFetchingNextPage,
-	} = useInfiniteQuery({
-		queryKey: [key],
-		queryFn: ({ pageParam = initialPageParam }) =>
-			api
-				.post(
-					url,
-					{ page: pageParam, ...elements },
-					{
-						headers: {
-							Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-						},
-					}
-				)
-				.then(response => response?.data?.data)
-				.catch(error => {
-					console.error('Error fetching data:', error);
-					throw error;
-				}),
-		getNextPageParam: (lastPage, allPages) => {
-			return lastPage?.length ? allPages?.length : undefined;
+	} = useInfiniteQuery<ApiResponse, Error>({
+		queryKey: [key, url, elements],
+		queryFn: async ({ pageParam }) => {
+			const response = await api.post<ApiResponse>(url, {
+				page: pageParam,
+				...elements,
+			});
+			return response.data;
+		},
+		initialPageParam, // ✅ Buni qo‘shish kerak edi
+		getNextPageParam: lastPage => {
+			const currentPage = lastPage?.meta?.currentPage ?? 1;
+			const totalPages = lastPage?.meta?.totalPages ?? 1;
+			return currentPage < totalPages ? currentPage + 1 : undefined;
 		},
 		enabled,
-		...options,
 	});
 
 	return {

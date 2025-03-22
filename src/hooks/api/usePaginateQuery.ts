@@ -1,26 +1,39 @@
 import { api } from '@/config/auth/api';
 import { useQuery } from '@tanstack/react-query';
 
+interface UsePaginateQueryProps {
+	key?: string;
+	url?: string;
+	page?: number;
+	params?: Record<string, null>;
+	showSuccessMsg?: boolean;
+	showErrorMsg?: boolean;
+	enabled?: boolean;
+}
+
+interface ApiResponse {
+	data: null;
+}
+
 const usePaginateQuery = ({
 	key = 'get-all',
 	url = '/',
 	page = 0,
 	params = {},
-	showSuccessMsg = false,
-	showErrorMsg = false,
 	enabled = true,
-}) => {
-	const { isLoading, isError, data, error, isFetching, refetch } = useQuery({
+}: UsePaginateQueryProps) => {
+	const { isLoading, isError, data, error, isFetching, refetch } = useQuery<
+		ApiResponse,
+		Error
+	>({
 		queryKey: [key, page, params],
-		queryFn: () => api.get(`${url}?page=${page}`, params),
+		queryFn: async () => {
+			const response = await api.get<ApiResponse>(`${url}?page=${page}`, {
+				params,
+			});
+			return response.data;
+		},
 		enabled,
-		keepPreviousData: true,
-		onSuccess: res => {
-			if (showSuccessMsg) return res;
-		},
-		onError: err => {
-			if (showErrorMsg) return err;
-		},
 	});
 
 	return {

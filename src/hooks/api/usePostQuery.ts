@@ -1,14 +1,20 @@
 import { api } from '@/config/auth/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 type PostRequestProps = {
 	url: string;
-	attributes?: null | undefined;
-	config?: object;
+	attributes?: Record<string, null> | null;
+	config?: AxiosRequestConfig;
 };
 
-const postRequest = ({ url, attributes, config = {} }: PostRequestProps) =>
-	api.post(url, attributes, config);
+const postRequest = async ({
+	url,
+	attributes,
+	config = {},
+}: PostRequestProps): Promise<AxiosResponse> => {
+	return api.post(url, attributes, config);
+};
 
 type UsePostQueryProps = {
 	hideSuccessToast?: boolean;
@@ -21,14 +27,18 @@ const usePostQuery = ({
 }: UsePostQueryProps) => {
 	const queryClient = useQueryClient();
 
-	const { mutate, isLoading, isError, error } = useMutation({
-		mutationFn: postRequest, // ✅ v5: `mutationFn` obyekt ichida bo'lishi kerak
+	const { mutate, isPending, isError, error } = useMutation<
+		AxiosResponse,
+		Error,
+		PostRequestProps
+	>({
+		mutationFn: postRequest,
 		onSuccess: data => {
 			if (!hideSuccessToast) {
 				console.log('✅ Success:', data);
 			}
 			if (listKeyId) {
-				queryClient.invalidateQueries({ queryKey: [listKeyId] }); // ✅ v5 usuli
+				queryClient.invalidateQueries({ queryKey: [listKeyId] });
 			}
 		},
 		onError: err => {
@@ -38,7 +48,7 @@ const usePostQuery = ({
 
 	return {
 		mutate,
-		isLoading,
+		isPending,
 		isError,
 		error,
 	};
