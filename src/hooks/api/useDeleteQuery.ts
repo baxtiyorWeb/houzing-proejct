@@ -24,7 +24,7 @@ const useDeleteQuery = ({ listKeyId = null }: UseDeleteQueryProps) => {
 
 	return {
 		mutate,
-		isPending, // isLoading o‘rniga
+		isPending,
 		isError,
 		error,
 	};

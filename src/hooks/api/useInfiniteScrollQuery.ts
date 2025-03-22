@@ -49,7 +49,7 @@ const useInfiniteScrollQuery = ({
 			});
 			return response.data;
 		},
-		initialPageParam, // ✅ Buni qo‘shish kerak edi
+		initialPageParam,
 		getNextPageParam: lastPage => {
 			const currentPage = lastPage?.meta?.currentPage ?? 1;
 			const totalPages = lastPage?.meta?.totalPages ?? 1;
