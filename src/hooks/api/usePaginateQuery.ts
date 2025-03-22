@@ -4,15 +4,11 @@ import { useQuery } from '@tanstack/react-query';
 interface UsePaginateQueryProps {
 	key?: string;
 	url?: string;
-	page?: number;
-	params?: Record<string, null>;
+	page?: unknown;
+	params?: Record<string, unknown>;
 	showSuccessMsg?: boolean;
 	showErrorMsg?: boolean;
 	enabled?: boolean;
-}
-
-interface ApiResponse {
-	data: null;
 }
 
 const usePaginateQuery = ({
@@ -22,19 +18,17 @@ const usePaginateQuery = ({
 	params = {},
 	enabled = true,
 }: UsePaginateQueryProps) => {
-	const { isLoading, isError, data, error, isFetching, refetch } = useQuery<
-		ApiResponse,
-		Error
-	>({
-		queryKey: [key, page, params],
-		queryFn: async () => {
-			const response = await api.get<ApiResponse>(`${url}?page=${page}`, {
-				params,
-			});
-			return response.data;
-		},
-		enabled,
-	});
+	const { isLoading, isError, data, error, isFetching, refetch } =
+		useQuery<Error>({
+			queryKey: [key, page, params],
+			queryFn: async () => {
+				const response = await api.get(`${url}?page=${page}`, {
+					params,
+				});
+				return response.data;
+			},
+			enabled,
+		});
 
 	return {
 		isLoading,
