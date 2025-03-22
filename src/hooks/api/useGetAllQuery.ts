@@ -1,5 +1,6 @@
+'use client';
 import { api } from '@/config/auth/api';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 const useGetAllQuery = ({
 	key = 'get-all',
@@ -21,14 +22,12 @@ const useGetAllQuery = ({
 		},
 	},
 }) => {
-	const { isLoading, isError, data, error, isFetching, refetch } = useQuery(
-		key,
-		() => api.get(url, params),
-		{
-			...options,
-			enabled,
-		}
-	);
+	const { isLoading, isError, data, error, isFetching, refetch } = useQuery({
+		queryKey: [key],
+		queryFn: () => api.get(url, params),
+		enabled,
+		...options,
+	});
 
 	return {
 		isLoading,

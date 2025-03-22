@@ -1,5 +1,5 @@
 import { api } from '@/config/auth/api';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 const usePaginateQuery = ({
 	key = 'get-all',
@@ -10,24 +10,18 @@ const usePaginateQuery = ({
 	showErrorMsg = false,
 	enabled = true,
 }) => {
-	const { isLoading, isError, data, error, isFetching, refetch } = useQuery(
-		[key, page, params],
-		() => api.get(`${url}?page=${page}`, params),
-		{
-			enabled,
-			keepPreviousData: true,
-			onSuccess: res => {
-				if (showSuccessMsg) {
-					return res;
-				}
-			},
-			onError: err => {
-				if (showErrorMsg) {
-					return err;
-				}
-			},
-		}
-	);
+	const { isLoading, isError, data, error, isFetching, refetch } = useQuery({
+		queryKey: [key, page, params],
+		queryFn: () => api.get(`${url}?page=${page}`, params),
+		enabled,
+		keepPreviousData: true,
+		onSuccess: res => {
+			if (showSuccessMsg) return res;
+		},
+		onError: err => {
+			if (showErrorMsg) return err;
+		},
+	});
 
 	return {
 		isLoading,

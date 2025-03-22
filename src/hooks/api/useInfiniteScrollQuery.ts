@@ -1,5 +1,5 @@
 import { api } from '@/config/auth/api';
-import { useInfiniteQuery } from 'react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 const useInfiniteScrollQuery = ({
 	key = 'infinite-query',
@@ -9,17 +9,12 @@ const useInfiniteScrollQuery = ({
 	showSuccessMsg = false,
 	hideErrorMsg = false,
 	enabled = true,
-
 	options = {
 		onSuccess: data => {
-			if (showSuccessMsg) {
-				return data;
-			}
+			if (showSuccessMsg) return data;
 		},
 		onError: error => {
-			if (!hideErrorMsg) {
-				return error;
-			}
+			if (!hideErrorMsg) return error;
 		},
 	},
 }) => {
@@ -33,17 +28,13 @@ const useInfiniteScrollQuery = ({
 		isError,
 		error,
 		isFetchingNextPage,
-	} = useInfiniteQuery(
-		key,
-		({ pageParam = initialPageParam }) =>
+	} = useInfiniteQuery({
+		queryKey: [key],
+		queryFn: ({ pageParam = initialPageParam }) =>
 			api
 				.post(
 					url,
-					{
-						page: pageParam,
-
-						...elements,
-					},
+					{ page: pageParam, ...elements },
 					{
 						headers: {
 							Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -55,15 +46,12 @@ const useInfiniteScrollQuery = ({
 					console.error('Error fetching data:', error);
 					throw error;
 				}),
-
-		{
-			getNextPageParam: (lastPage, allPages) => {
-				return lastPage?.length ? allPages?.length : undefined;
-			},
-			enabled,
-			...options,
-		}
-	);
+		getNextPageParam: (lastPage, allPages) => {
+			return lastPage?.length ? allPages?.length : undefined;
+		},
+		enabled,
+		...options,
+	});
 
 	return {
 		data,

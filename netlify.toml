@@ -1,2 +1,2 @@
 [build]
-  command = "yarn install && yarn build"
+  command = "npm install && npm build"

@@ -1,5 +1,5 @@
 import { api } from '@/config/auth/api';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 type PostRequestProps = {
 	url: string;
@@ -21,17 +21,14 @@ const usePostQuery = ({
 }: UsePostQueryProps) => {
 	const queryClient = useQueryClient();
 
-	const { mutate, isLoading, isError, error } = useMutation<
-		unknown, // Serverdan keladigan ma'lumot
-		unknown, // Xatolik turi
-		PostRequestProps // Mutate-ga beriladigan argumentlar
-	>(params => postRequest(params), {
+	const { mutate, isLoading, isError, error } = useMutation({
+		mutationFn: postRequest, // ✅ v5: `mutationFn` obyekt ichida bo'lishi kerak
 		onSuccess: data => {
 			if (!hideSuccessToast) {
 				console.log('✅ Success:', data);
 			}
 			if (listKeyId) {
-				queryClient.invalidateQueries(listKeyId);
+				queryClient.invalidateQueries({ queryKey: [listKeyId] }); // ✅ v5 usuli
 			}
 		},
 		onError: err => {

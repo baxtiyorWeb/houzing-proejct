@@ -1,5 +1,5 @@
 import { api } from '@/config/auth/api';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 const fetchRequest = (url: string, params) => api.get(url, params);
 
@@ -12,23 +12,17 @@ const useGetOneQuery = ({
 	showSuccessMsg = false,
 	showErrorMsg = true,
 }) => {
-	const { isLoading, isError, data, error, refetch } = useQuery(
-		[key, id],
-		() => fetchRequest(`${url}`, params),
-		{
-			onSuccess: res => {
-				if (showSuccessMsg) {
-					return res;
-				}
-			},
-			onError: err => {
-				if (showErrorMsg) {
-					return err;
-				}
-			},
-			enabled,
-		}
-	);
+	const { isLoading, isError, data, error, refetch } = useQuery({
+		queryKey: [key, id],
+		queryFn: () => fetchRequest(url, params),
+		enabled,
+		onSuccess: res => {
+			if (showSuccessMsg) return res;
+		},
+		onError: err => {
+			if (showErrorMsg) return err;
+		},
+	});
 
 	return {
 		isLoading,

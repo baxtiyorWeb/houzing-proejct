@@ -1,20 +1,17 @@
 "use client";
 
-import { ReactNode } from "react";
 import {
   MutationCache,
   QueryCache,
   QueryClient,
   QueryClientProvider,
-} from "react-query";
-import { ReactQueryDevtools } from "react-query-devtools";
+} from "@tanstack/react-query";
+import { ReactNode } from "react";
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-
       staleTime: 1000 * 60 * 5,
-      cacheTime: 1000 * 60 * 10,
       retry: 2,
       refetchOnWindowFocus: false,
     },
@@ -42,8 +39,7 @@ const QueryProvider = ({ children }: QueryProviderProps) => {
   return (
     <QueryClientProvider client={queryClient} >
       {children}
-      <ReactQueryDevtools initialIsOpen={false}
-        position="bottom-right" />
+
     </QueryClientProvider>
   );
 };
