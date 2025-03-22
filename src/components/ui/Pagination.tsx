@@ -5,7 +5,7 @@ type PaginationProps = {
   currentPage: number;
   onPageChange: (page: number) => void;
 };
-
+// pagination
 const Pagination: React.FC<PaginationProps> = ({
   totalPages,
   currentPage,
