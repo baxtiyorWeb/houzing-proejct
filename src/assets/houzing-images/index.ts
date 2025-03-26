@@ -2,6 +2,7 @@ export { default as apartmentIcon } from '@/assets/houzing-images/apartment.svg'
 export { default as BathIcon } from '@/assets/houzing-images/bath.svg';
 export { default as BedIcon } from '@/assets/houzing-images/bed.svg';
 export { default as BurgerMenuIcon } from '@/assets/houzing-images/burger-menu.svg';
+export { default as BusinesIcon } from '@/assets/houzing-images/BusinessIcon.svg';
 export { default as calculatorIcon } from '@/assets/houzing-images/calculator.svg';
 export { default as CalendarIcon } from '@/assets/houzing-images/calendar.svg';
 export { default as CarKeyIcon } from '@/assets/houzing-images/car-key.svg';
@@ -25,3 +26,4 @@ export { default as SearchIcon } from '@/assets/houzing-images/search.svg';
 export { default as SettingLineIcon } from '@/assets/houzing-images/setting-line.svg';
 export { default as ShareIcon } from '@/assets/houzing-images/share.svg';
 export { default as UserIcon } from '@/assets/houzing-images/user-icon.svg';
+export { default as villaIcon } from '@/assets/houzing-images/villaIcon.svg';

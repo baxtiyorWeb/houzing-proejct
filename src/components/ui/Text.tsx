@@ -30,7 +30,7 @@ const Text: React.FC<TextProps> = ({
 
   return (
     <p
-      className={`${sizeClasses[size]} ${weightClasses[weight]} ${className}`}
+      className={` ${sizeClasses[size]} ${weightClasses[weight]} ${className}`}
       style={{ color }}
     >
       {children}

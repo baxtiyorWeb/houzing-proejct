@@ -19,8 +19,7 @@ type ItemProps = {
   sliderConfig?: SliderConfig;
 };
 
-type SliderConfig = Settings; // react-slick ning `Settings` interface'idan foydalanamiz
-
+type SliderConfig = Settings;
 const ItemCard = ({
   grid = false,
   columns = 1,
@@ -33,9 +32,7 @@ const ItemCard = ({
   items = [],
   slider = false,
   sliderConfig,
-  children,
 }: ItemProps) => {
-  // react-slick ning to'liq default sozlamalari
   const defaultSliderConfig: SliderConfig = {
     dots: true,
     infinite: true,
@@ -55,6 +52,24 @@ const ItemCard = ({
     swipeToSlide: false,
     variableWidth: false,
     waitForAnimate: true,
+
+    // **Responsive qo'shildi**
+    responsive: [
+      {
+        breakpoint: 1024, // 1024px va undan kichik ekranlar uchun
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 768, // 768px va undan kichik ekranlar uchun
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   // `sliderConfig` ni `useMemo` bilan optimallashtiramiz
@@ -72,30 +87,14 @@ const ItemCard = ({
   };
 
   return (
-    <div style={containerStyles} className="p-4 border rounded-lg bg-gray-100">
-      {slider ? (
-        <Slider {...mergedSliderConfig}>
-          {items.map((item, index) => (
-            <div
-              key={index}
-              style={cardStyles}
-              className={`${className || "bg-blue-500"} p-4 shadow-md rounded-md`}
-            >
-              {item}
-            </div>
-          ))}
-        </Slider>
-      ) : (
-        items.map((item, index) => (
-          <div
-            key={index}
-            style={cardStyles}
-            className={`${className || "bg-blue-500"} p-4 shadow-md rounded-md`}
-          >
-            {children ? children : item}
-          </div>
-        ))
-      )}
+    <div style={containerStyles}>
+      <div style={containerStyles} className={className}>
+        {slider ? (
+          <Slider {...mergedSliderConfig}>{items}</Slider>
+        ) : (
+          items.map((item, index) => <div key={index} style={cardStyles}>{item}</div>)
+        )}
+      </div>
     </div>
   );
 };
