@@ -1,15 +1,67 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import { BathIcon, BedIcon, DocumentIcon } from "@/assets/houzing-images"
 import Item from "@/components/Item"
 import ItemCard from "@/components/ItemCard"
 import Div from "@/components/ui/Div"
 import Text from "@/components/ui/Text"
+import { ScheduleService } from "@/services/schedule-service"
 import Container from "@/shared/Container"
+import { Property } from "@/types"
 import Image from "next/image"
-import { useState } from "react"
+import { useParams } from "next/navigation"
+import { useEffect, useState } from "react"
 
 const ViewPage = () => {
   const [checked, setChecked] = useState(false);
+  const [property, setProperty] = useState<Property | any>(null)
+  const [propertyWithId, setPropertyWithId] = useState<Property | any>(null)
+  const [windowWidth, setWindowWidth] = useState<number | any>(null);
+  const { id } = useParams<string | any>()
+  useEffect(() => {
+    if (typeof window !== "undefined") { // Faqat brauzerda bajariladi
+      setWindowWidth(window.innerWidth);
+
+      const handleResize = () => {
+        setWindowWidth(window.innerWidth);
+      };
+
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }
+  }, []);
+
+  useEffect(() => {
+
+    // Fetch property details from your API
+    const fetchProperty = async () => {
+      try {
+        const response = await ScheduleService.getAllSchedules()
+        setProperty(response)
+      } catch (error) {
+        console.error("Error fetching property details:", error)
+      }
+    }
+
+    fetchProperty()
+
+  }, [])
+  useEffect(() => {
+
+    // Fetch property details from your API
+    const fetchProperty = async () => {
+      try {
+        const response = await ScheduleService.getScheduleById(id)
+        setPropertyWithId(response)
+      } catch (error) {
+        console.error("Error fetching property details:", error)
+      }
+    }
+
+    fetchProperty()
+
+  }, [])
+
   return (
     <div>
       <Container>
@@ -29,7 +81,7 @@ const ViewPage = () => {
             <div className="col-span-7 row-span-10">
               <div>
                 <Text color="#0D263B" className="font-semibold text-2xl leading-8 tracking-[-2%]">
-                  Luxury Family Loft by Victoria Park
+                  {propertyWithId?.title}
                 </Text>
                 <Text color="#696969" className="font-normal text-base leading-6 tracking-[0%]">Quincy St, Brooklyn, NY, USA</Text>
               </div>
@@ -57,7 +109,7 @@ const ViewPage = () => {
               </Text>
               <div>
                 <Text color="#696969">
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quos animi at exercitationem obcaecati dolorum nesciunt veritatis ab aliquid enim error sunt, totam delectus maxime dicta asperiores id odio molestias hic.
+                  {propertyWithId?.description}
                 </Text>
                 <Text color="#0061DF" className="mt-12 mb-24 font-normal text-sm leading-5 tracking-[0%] underline decoration-solid decoration-[0%]">Show more</Text>
                 <Text color="#0D263B" className="font-semibold text-lg leading-7 tracking-[0%]">Documents</Text>
@@ -83,23 +135,9 @@ const ViewPage = () => {
 
                 <div className="mb-36 grid grid-cols-3 gap-y-6 gap-x-16">
                   <div className="flex justify-center items-center space-x-2">
-                    <Text color="#0D263B" className="font-semibold text-sm leading-5 tracking-[0%]">Address: </Text><Text color="#696969" className="font-normal text-sm leading-5 tracking-[0%]">329 Queensberry Street</Text>
+                    <Text color="#0D263B" className="font-semibold text-sm leading-5 tracking-[0%]">Address: </Text><Text color="#696969" className="font-normal text-sm leading-5 tracking-[0%]">{propertyWithId?.location}</Text>
                   </div>
-                  <div className="flex justify-center items-center space-x-2">
-                    <Text color="#0D263B" className="font-semibold text-sm leading-5 tracking-[0%]">Address: </Text><Text color="#696969" className="font-normal text-sm leading-5 tracking-[0%]">329 Queensberry Street</Text>
-                  </div>
-                  <div className="flex justify-center items-center space-x-2">
-                    <Text color="#0D263B" className="font-semibold text-sm leading-5 tracking-[0%]">Address: </Text><Text color="#696969" className="font-normal text-sm leading-5 tracking-[0%]">329 Queensberry Street</Text>
-                  </div>
-                  <div className="flex justify-center items-center space-x-2">
-                    <Text color="#0D263B" className="font-semibold text-sm leading-5 tracking-[0%]">Address: </Text><Text color="#696969" className="font-normal text-sm leading-5 tracking-[0%]">329 Queensberry Street</Text>
-                  </div>
-                  <div className="flex justify-center items-center space-x-2">
-                    <Text color="#0D263B" className="font-semibold text-sm leading-5 tracking-[0%]">Address: </Text><Text color="#696969" className="font-normal text-sm leading-5 tracking-[0%]">329 Queensberry Street</Text>
-                  </div>
-                  <div className="flex justify-center items-center space-x-2">
-                    <Text color="#0D263B" className="font-semibold text-sm leading-5 tracking-[0%]">Address: </Text><Text color="#696969" className="font-normal text-sm leading-5 tracking-[0%]">329 Queensberry Street</Text>
-                  </div>
+
 
                 </div>
 
@@ -311,7 +349,7 @@ const ViewPage = () => {
                     className="w-12 h-12 rounded-full object-cover"
                   />
                   <div>
-                    <Text color="#0D263B" className="font-semibold text-base leading-6 tracking-[0%]">Darrel Steward</Text>
+                    <Text color="#0D263B" className="font-semibold text-base leading-6 tracking-[0%]">{propertyWithId?.user_id?.username}</Text>
                     <Text color="#696969" className="font-normal text-base leading-6 tracking-[0%]">(123) 456-7890</Text>
                   </div>
                 </div>
@@ -378,9 +416,29 @@ const ViewPage = () => {
           <Text color="#696969" className="font-normal text-base leading-6 tracking-[0%] mt-2 mb-[70px]">Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.</Text>
         </div>
 
-        <ItemCard className="mb-26" items={[0, 1, 2, 3, 4, 5, 6].map((_, index) => <div key={index} >
-          <Item />
-        </div>)} slider />
+        {windowWidth >= 1024 ? (
+          <ItemCard
+            sliderConfig={{
+              centerMode: false,
+              slidesToShow: property?.length
+            }}
+            cardStyles={{
+              marginRight: "20px",
+            }}
+            className="h-auto bg-transparent"
+            items={property?.map((item: Property, index: number) => (
+              <Item key={index} id={item.id} title={item.title} price={item.price} description={item.description} />
+            ))}
+            slider
+          />
+        ) : (
+          <div className="grid sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3">
+            {property?.map((item: Property, index: number) => (
+              <Item key={index} title={item.title} id={item.id} price={item.price} description={item.description} />
+            ))}
+          </div>
+
+        )}
       </Container>
     </div>
   )

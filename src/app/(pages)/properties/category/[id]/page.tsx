@@ -1,5 +1,5 @@
-"use client"
 /* eslint-disable @typescript-eslint/no-explicit-any */
+"use client"
 import Item from "@/components/Item"
 import ItemCard from "@/components/ItemCard"
 import Div from "@/components/ui/Div"
@@ -10,9 +10,9 @@ import { Property } from "@/types"
 import { ChevronDown } from "lucide-react"
 import { useEffect, useState } from "react"
 
-const PropertiesPage = () => {
-  const [property, setProperty] = useState<Property | any>(null)
+const CategoryPage = () => {
   const [windowWidth, setWindowWidth] = useState<number | any>(null);
+
   useEffect(() => {
     if (typeof window !== "undefined") { // Faqat brauzerda bajariladi
       setWindowWidth(window.innerWidth);
@@ -25,8 +25,9 @@ const PropertiesPage = () => {
       return () => window.removeEventListener("resize", handleResize);
     }
   }, []);
-  useEffect(() => {
 
+  const [property, setProperty] = useState<Property | any>(null)
+  useEffect(() => {
     // Fetch property details from your API
     const fetchProperty = async () => {
       try {
@@ -38,7 +39,6 @@ const PropertiesPage = () => {
     }
 
     fetchProperty()
-
   }, [])
   return (
     <Container>
@@ -53,30 +53,32 @@ const PropertiesPage = () => {
           <span> Sort by: Newest Listings </span><ChevronDown />
         </p>
       </div>
+      <Container>
 
-      {windowWidth >= 1024 ? (
-        <ItemCard
-          sliderConfig={{
-            centerMode: false,
-            slidesToShow: property?.length
-          }}
-          cardStyles={{
-            marginRight: "20px",
-          }}
-          className="h-auto bg-transparent"
-          items={property?.map((item: Property, index: number) => (
-            <Item key={index} title={item.title} price={item.price} description={item.description} id={item.id} />
-          ))}
-          slider
-        />
-      ) : (
-        <div className="grid sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3">
-          {property?.map((item: Property, index: number) => (
-            <Item key={index} title={item.title} price={item.price} description={item.description} id={item.id} />
-          ))}
-        </div>
+        {windowWidth >= 1024 ? (
+          <ItemCard
+            sliderConfig={{
+              centerMode: false,
+              slidesToShow: property?.length
+            }}
+            cardStyles={{
+              marginRight: "20px",
+            }}
+            className="h-auto bg-transparent"
+            items={property?.map((item: Property, index: number) => (
+              <Item key={index} title={item.title} price={item.price} description={item.description} id={item.id} />
+            ))}
+            slider
+          />
+        ) : (
+          <div className="grid sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3">
+            {property?.map((item: Property, index: number) => (
+              <Item key={index} title={item.title} price={item.price} description={item.description} id={item.id} />
+            ))}
+          </div>
 
-      )}
+        )}
+      </Container>
 
       <div className="w-full  flex justify-center my-10 cursor-pointer items-center">
         <Div className="w-[250] bg-[#0061DF] h-[44] gap-2.5 px-10 py-3 rounded-sm flex justify-center items-center">
@@ -87,4 +89,4 @@ const PropertiesPage = () => {
   )
 }
 
-export default PropertiesPage
+export default CategoryPage

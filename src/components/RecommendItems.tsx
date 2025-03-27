@@ -1,8 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import { apartmentIcon, BusinesIcon, calculatorIcon, discordIcon, homeIcon, houseIcon, mapsIcon, villaIcon } from "@/assets/houzing-images"
 import userImg from "@/assets/user.png"
+import { CategoryService } from "@/services/category-services"
+import { ScheduleService } from "@/services/schedule-service"
 import Container from "@/shared/Container"
+import { Category, Property } from "@/types"
 import Image from "next/image"
+import Link from "next/link"
 import { useEffect, useState } from "react"
 import Item from "./Item"
 import ItemCard from "./ItemCard"
@@ -10,7 +15,9 @@ import Div from "./ui/Div"
 import Text from "./ui/Text"
 
 const RecommendItems = () => {
-  const [windowWidth, setWindowWidth] = useState<number | null>(null);
+  const [property, setProperty] = useState<Property | any>(null)
+  const [categories, setCategories] = useState<Category | any>(null)
+  const [windowWidth, setWindowWidth] = useState<number | any>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") { // Faqat brauzerda bajariladi
@@ -25,6 +32,30 @@ const RecommendItems = () => {
     }
   }, []);
 
+  useEffect(() => {
+
+    // Fetch property details from your API
+    const fetchProperty = async () => {
+      try {
+        const response = await ScheduleService.getAllSchedules()
+        setProperty(response)
+      } catch (error) {
+        console.error("Error fetching property details:", error)
+      }
+    }
+
+    fetchProperty()
+    const fetchCategories = async () => {
+      try {
+        const response = await CategoryService.getAllCategories()
+        setCategories(response)
+      } catch (error) {
+        console.error("Error fetching property details:", error)
+      }
+    }
+
+    fetchCategories()
+  }, [])
 
 
   return (
@@ -38,29 +69,26 @@ const RecommendItems = () => {
           <ItemCard
             sliderConfig={{
               centerMode: false,
+              slidesToShow: property?.length
             }}
             cardStyles={{
               marginRight: "20px",
             }}
             className="h-auto bg-transparent"
-            items={[1, 2, 3, 4].map((_, index) => (
-              <Item key={index} />
+            items={property?.map((item: Property, index: number) => (
+              <Item key={index} title={item.title} price={item.price} description={item.description} id={item.id} />
             ))}
             slider
           />
         ) : (
           <div className="grid sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3">
-            <Item />
-            <Item />
-            <Item />
-            <Item />
-            <Item />
-            <Item />
-            <Item />
+            {property?.map((item: Property, index: number) => (
+              <Item key={index} title={item.title} price={item.price} description={item.description} id={item.id} />
+            ))}
           </div>
 
         )}
-      </Container>;
+      </Container>
       <div className="bg-[#F5F7FC]  flex justify-center items-center flex-col mt-12 ">
         <Container>
           <div className="flex justify-center items-center flex-col">
@@ -106,12 +134,13 @@ const RecommendItems = () => {
           <ItemCard
             sliderConfig={{
               centerMode: false,
-              slidesToShow: 4,
+              slidesToShow: categories?.length,
             }}
+
             slider
             className="bg-transparent"
-            items={[0, 1, 2, 3].map((_, index) => (
-              <div
+            items={categories?.map((item: Category, index: number) => (
+              <Link href={`/properties/category/${item?.id}`}
                 key={index}
                 className="h-[350px]  mb-[32px] px-[20px]"
 
@@ -126,13 +155,10 @@ const RecommendItems = () => {
                   {index === 2 && <Image src={BusinesIcon} alt="officeIcon" />}
                   {index === 3 && <Image src={villaIcon} alt="villaIcon" />}
                   <span className="font-semibold text-lg leading-7 tracking-[0%] text-white block mt-6">
-                    {index === 0 && "House"}
-                    {index === 1 && "Apartment"}
-                    {index === 2 && "Office"}
-                    {index === 3 && "Villa"}
+                    {item?.name}
                   </span>
                 </div>
-              </div>
+              </Link>
             ))}
           />
 
@@ -158,13 +184,29 @@ const RecommendItems = () => {
           <Text color="#696969" className="font-normal text-base leading-6 tracking-[0%] mt-2 mb-8">Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.</Text>
         </div>
 
-        <ItemCard sliderConfig={{
-          centerMode: false
-        }} cardStyles={{
-          marginRight: '20px'
-        }} className="h-auto   bg-transparent  "
-          items={[1, 2, 3, 4].map((_, index) => <Item key={index} />)} slider>
-        </ItemCard>
+        {windowWidth >= 1024 ? (
+          <ItemCard
+            sliderConfig={{
+              centerMode: false,
+              slidesToShow: property?.length
+            }}
+            cardStyles={{
+              marginRight: "20px",
+            }}
+            className="h-auto bg-transparent"
+            items={property?.map((item: Property, index: number) => (
+              <Item key={index} id={item.id} title={item.title} price={item.price} description={item.description} />
+            ))}
+            slider
+          />
+        ) : (
+          <div className="grid sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3">
+            {property?.map((item: Property, index: number) => (
+              <Item key={index} title={item.title} id={item.id} price={item.price} description={item.description} />
+            ))}
+          </div>
+
+        )}
       </Container>
 
       <div className="bg-[#F5F7FC] mt-12  ">

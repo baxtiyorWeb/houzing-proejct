@@ -3,6 +3,7 @@ import Container from "@/shared/Container"
 import Image from "next/image"
 import Link from "next/link"
 import Filternavigation from "./FilterNavigation"
+import Text from "./ui/Text"
 
 
 const Header = () => {
@@ -12,12 +13,13 @@ const Header = () => {
         <Container>
           <div className="py-[20px] flex justify-between items-center">
 
-            <div>
+            <Link href={'/'} className="flex justify-center items-center space-x-2">
               <Image src={LogoIcon} alt="logo" />
-            </div>
+              <Text color="white" className="text-lg font-extrabold">Houzing</Text>
+            </Link>
             <div className="space-x-[64px]">
-              <Link className="font-normal text-base leading-6 tracking-[0%] text-[#FFFFFF]" href={"/home"}>Home</Link>
-              <Link className="font-normal text-base leading-6 tracking-[0%] text-[#FFFFFF]" href={"/Properties"}>Properties</Link>
+              <Link className="font-normal text-base leading-6 tracking-[0%] text-[#FFFFFF]" href={"/"}>Home</Link>
+              <Link className="font-normal text-base leading-6 tracking-[0%] text-[#FFFFFF]" href={"/properties"}>Properties</Link>
               <Link className="font-normal text-base leading-6 tracking-[0%] text-[#FFFFFF]" href={"/Contacts"}>
                 Contacts
               </Link>
