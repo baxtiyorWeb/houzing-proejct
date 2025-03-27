@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BathIcon, BedIcon } from '@/assets/houzing-images'
 import userImg from "@/assets/user.png"
