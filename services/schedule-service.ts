@@ -51,6 +51,19 @@ export const ScheduleService = {
 			throw error;
 		}
 	},
+	getScheduleByCategoryId: async (
+		id: number | string | any
+	): Promise<Property> => {
+		try {
+			const response = await api.get<Property>(
+				`/uy/get_schedule_by_category_id/${id}/`
+			);
+			return response.data;
+		} catch (error) {
+			console.error(`Error fetching schedule ${id}:`, error);
+			throw error;
+		}
+	},
 
 	updateSchedule: async (
 		id: number | string,

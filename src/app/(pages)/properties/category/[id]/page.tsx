@@ -8,11 +8,12 @@ import { ScheduleService } from "@/services/schedule-service"
 import Container from "@/shared/Container"
 import { Property } from "@/types"
 import { ChevronDown } from "lucide-react"
+import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 
 const CategoryPage = () => {
   const [windowWidth, setWindowWidth] = useState<number | any>(null);
-  // const { id } = useParams()
+  const { id } = useParams()
   useEffect(() => {
     if (typeof window !== "undefined") { // Faqat brauzerda bajariladi
       setWindowWidth(window.innerWidth);
@@ -31,7 +32,7 @@ const CategoryPage = () => {
     // Fetch property details from your API
     const fetchProperty = async () => {
       try {
-        const response = await ScheduleService.getAllSchedules()
+        const response = await ScheduleService.getScheduleByCategoryId(Number(id))
         setProperty(response)
       } catch (error) {
         console.error("Error fetching property details:", error)

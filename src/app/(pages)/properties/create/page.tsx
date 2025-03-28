@@ -17,6 +17,13 @@ export default function PropertyForm() {
     price: "",
     location: "",
     status: "active",
+
+    material: "",
+    home_area: "",
+    beds: "",
+    label: "",
+    lot_dimensions: "",
+    rooms: "",
   })
 
   const [image1, setImage1] = useState<File | null>(null)
@@ -72,8 +79,7 @@ export default function PropertyForm() {
         },
       })
 
-      console.log(response.data);
-
+      console.log(response.data)
 
       setSubmitResult({
         success: true,
@@ -88,6 +94,13 @@ export default function PropertyForm() {
         price: "",
         location: "",
         status: "active",
+        // Reset new fields
+        material: "",
+        home_area: "",
+        beds: "",
+        label: "",
+        lot_dimensions: "",
+        rooms: "",
       })
       setImage1(null)
       setImagePreview(null)
@@ -152,6 +165,38 @@ export default function PropertyForm() {
               />
             </div>
 
+            <div className="flex flex-col">
+              <label htmlFor="label" className="text-gray-600 mb-1">
+                Label
+              </label>
+              <input
+                type="text"
+                id="label"
+                name="label"
+                value={formData.label}
+                onChange={handleInputChange}
+                placeholder="Property label*"
+                className="border-b placeholder:text-gray-600 focus:outline-none focus:border-blue-500 py-2"
+                required
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label htmlFor="material" className="text-gray-600 mb-1">
+                Material
+              </label>
+              <input
+                type="text"
+                id="material"
+                name="material"
+                value={formData.material}
+                onChange={handleInputChange}
+                placeholder="Building material*"
+                className="border-b placeholder:text-gray-600 focus:outline-none focus:border-blue-500 py-2"
+                required
+              />
+            </div>
+
             <div className="flex flex-col col-span-1 md:col-span-2">
               <label htmlFor="description" className="text-gray-600 mb-1">
                 Description
@@ -165,6 +210,77 @@ export default function PropertyForm() {
                 className="border-b placeholder:text-gray-600 focus:outline-none focus:border-blue-500 py-2"
                 required
                 rows={3}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg p-6 mb-6 shadow-sm">
+          <Text>Property Details</Text>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+            <div className="flex flex-col">
+              <label htmlFor="beds" className="text-gray-600 mb-1">
+                Beds
+              </label>
+              <input
+                type="number"
+                id="beds"
+                name="beds"
+                value={formData.beds}
+                onChange={handleInputChange}
+                placeholder="Number of beds*"
+                className="border-b placeholder:text-gray-600 focus:outline-none focus:border-blue-500 py-2"
+                required
+                min="0"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label htmlFor="rooms" className="text-gray-600 mb-1">
+                Rooms
+              </label>
+              <input
+                type="number"
+                id="rooms"
+                name="rooms"
+                value={formData.rooms}
+                onChange={handleInputChange}
+                placeholder="Number of rooms*"
+                className="border-b placeholder:text-gray-600 focus:outline-none focus:border-blue-500 py-2"
+                required
+                min="0"
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label htmlFor="home_area" className="text-gray-600 mb-1">
+                Home Area
+              </label>
+              <input
+                type="text"
+                id="home_area"
+                name="home_area"
+                value={formData.home_area}
+                onChange={handleInputChange}
+                placeholder="Home area in sq ft*"
+                className="border-b placeholder:text-gray-600 focus:outline-none focus:border-blue-500 py-2"
+                required
+              />
+            </div>
+
+            <div className="flex flex-col">
+              <label htmlFor="lot_dimensions" className="text-gray-600 mb-1">
+                Lot Dimensions
+              </label>
+              <input
+                type="text"
+                id="lot_dimensions"
+                name="lot_dimensions"
+                value={formData.lot_dimensions}
+                onChange={handleInputChange}
+                placeholder="Lot dimensions*"
+                className="border-b placeholder:text-gray-600 focus:outline-none focus:border-blue-500 py-2"
+                required
               />
             </div>
           </div>

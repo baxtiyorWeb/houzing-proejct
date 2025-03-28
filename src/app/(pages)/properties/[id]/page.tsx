@@ -22,7 +22,7 @@ const ViewPage = () => {
     email: "",
     name: "",
     message: "",
-    schedule: "131",
+    schedule: Number(1)
   })
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | any>) => {
