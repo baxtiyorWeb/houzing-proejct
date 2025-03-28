@@ -57,9 +57,9 @@ const Header = () => {
               </Text>
             </Link>
 
-            <div>
+            <Link href={"/profile"}>
               <Image src={UserIcon || "/placeholder.svg"} alt="user icon" />
-            </div>
+            </Link>
           </div>
 
           {/* Mobile Navigation Menu */}
