@@ -12,7 +12,7 @@ import { useEffect, useState } from "react"
 
 const CategoryPage = () => {
   const [windowWidth, setWindowWidth] = useState<number | any>(null);
-
+  // const { id } = useParams()
   useEffect(() => {
     if (typeof window !== "undefined") { // Faqat brauzerda bajariladi
       setWindowWidth(window.innerWidth);
@@ -42,7 +42,6 @@ const CategoryPage = () => {
   }, [])
   return (
     <Container>
-
       <div className="flex justify-center items-center flex-col  ">
         <h1 className='font-semibold text-[28px] leading-9 tracking-[-2%] text-center mt-[64px]'>Properties</h1>
         <Text color="#696969" className="font-normal text-base leading-6 tracking-[0%] mt-2 mb-[70px]">Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.</Text>

@@ -8,7 +8,7 @@ type ChildrenProp = {
 
 const Container = ({ children }: ChildrenProp) => {
   return (
-    <div className={`container xl:px-[130px] sm:px-2 mx-auto `}>
+    <div className={`container overflow-hidden xl:px-[130px] sm:px-2 mx-auto `}>
       {children}
     </div>
   )

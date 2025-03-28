@@ -89,40 +89,61 @@ const RecommendItems = () => {
 
         )}
       </Container>
-      <div className="bg-[#F5F7FC]  flex justify-center items-center flex-col mt-12 ">
+      <div className="bg-[#F5F7FC] flex justify-center items-center flex-col mt-12">
         <Container>
           <div className="flex justify-center items-center flex-col">
-            <h1 className="font-semibold mt-[48px] text-[28px] leading-9 tracking-[-2%] text-center;">Why Choose Us?</h1>
-            <p className="mt-2 mb-10">Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.</p>
+            <h1 className="font-semibold mt-[48px] text-[28px] leading-9 tracking-[-2%] text-center">Why Choose Us?</h1>
+            <p className="mt-2 mb-10 text-center px-4">
+              Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.
+            </p>
           </div>
 
-          <div className="grid grid-cols-4 gap-x-[77px] mb-[50px]">
-            <div className="flex justify-center items-center flex-col ">
-              <Image src={discordIcon} alt="social" />
-              <h1 className="text-[#0D263B] font-semibold text-lg leading-7 tracking-[0%] text-center mt-6 mb-2">Trusted By Thousands</h1>
-              <Text color="#696969" className=" font-normal text-base leading-6 tracking-[0%] text-center">With over 1 million+ homes for sale available on the website, Trulia can match you with a house you will want to call home.</Text>
-            </div>
-            <div className="flex justify-center items-center flex-col ">
-              <Image src={houseIcon} alt="social" />
-              <h1 className="text-[#0D263B] font-semibold text-lg leading-7 tracking-[0%] text-center mt-6 mb-2">Trusted By Thousands</h1>
-              <Text color="#696969" className=" font-normal text-base leading-6 tracking-[0%] text-center">With over 1 million+ homes for sale available on the website, Trulia can match you with a house you will want to call home.</Text>
-            </div>
-            <div className="flex justify-center items-center flex-col ">
-              <Image src={calculatorIcon} alt="social" />
-              <h1 className="text-[#0D263B] font-semibold text-lg leading-7 tracking-[0%] text-center mt-6 mb-2">Trusted By Thousands</h1>
-              <Text color="#696969" className=" font-normal text-base leading-6 tracking-[0%] text-center">With over 1 million+ homes for sale available on the website, Trulia can match you with a house you will want to call home.</Text>
-            </div>
-            <div className="flex justify-center items-center flex-col ">
-              <Image src={mapsIcon} alt="social" />
-              <h1 className="text-[#0D263B] font-semibold text-lg leading-7 tracking-[0%] text-center mt-6 mb-2">Trusted By Thousands</h1>
-              <Text color="#696969" className=" font-normal text-base leading-6 tracking-[0%] text-center">With over 1 million+ homes for sale available on the website, Trulia can match you with a house you will want to call home.</Text>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-x-[77px] mb-[50px] px-4">
+            <div className="flex justify-center items-center flex-col p-4">
+              <Image src={discordIcon || "/placeholder.svg"} alt="social" />
+              <h1 className="text-[#0D263B] font-semibold text-lg leading-7 tracking-[0%] text-center mt-6 mb-2">
+                Trusted By Thousands
+              </h1>
+              <Text color="#696969" className="font-normal text-base leading-6 tracking-[0%] text-center">
+                With over 1 million+ homes for sale available on the website, Trulia can match you with a house you will
+                want to call home.
+              </Text>
             </div>
 
+            <div className="flex justify-center items-center flex-col p-4">
+              <Image src={houseIcon || "/placeholder.svg"} alt="social" />
+              <h1 className="text-[#0D263B] font-semibold text-lg leading-7 tracking-[0%] text-center mt-6 mb-2">
+                Trusted By Thousands
+              </h1>
+              <Text color="#696969" className="font-normal text-base leading-6 tracking-[0%] text-center">
+                With over 1 million+ homes for sale available on the website, Trulia can match you with a house you will
+                want to call home.
+              </Text>
+            </div>
+
+            <div className="flex justify-center items-center flex-col p-4">
+              <Image src={calculatorIcon || "/placeholder.svg"} alt="social" />
+              <h1 className="text-[#0D263B] font-semibold text-lg leading-7 tracking-[0%] text-center mt-6 mb-2">
+                Trusted By Thousands
+              </h1>
+              <Text color="#696969" className="font-normal text-base leading-6 tracking-[0%] text-center">
+                With over 1 million+ homes for sale available on the website, Trulia can match you with a house you will
+                want to call home.
+              </Text>
+            </div>
+
+            <div className="flex justify-center items-center flex-col p-4">
+              <Image src={mapsIcon || "/placeholder.svg"} alt="social" />
+              <h1 className="text-[#0D263B] font-semibold text-lg leading-7 tracking-[0%] text-center mt-6 mb-2">
+                Trusted By Thousands
+              </h1>
+              <Text color="#696969" className="font-normal text-base leading-6 tracking-[0%] text-center">
+                With over 1 million+ homes for sale available on the website, Trulia can match you with a house you will
+                want to call home.
+              </Text>
+            </div>
           </div>
         </Container>
-
-
-
       </div>
       <Container>
         <div className="flex justify-center items-center flex-col">
@@ -211,33 +232,94 @@ const RecommendItems = () => {
 
       <div className="bg-[#F5F7FC] mt-12  ">
         <Container>
-          <div className="flex justify-center items-center flex-col  ">
-            <h1 className='font-semibold text-[28px] leading-9 tracking-[-2%] text-center mt-[90px]'>Testimonials</h1>
-            <Text color="#696969" className="font-normal text-base leading-6 tracking-[0%] mt-2 mb-8">Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.</Text>
+          <div className="flex justify-center items-center flex-col">
+            <h1 className="font-semibold text-[28px] leading-9 tracking-[-2%] text-center mt-[90px] px-4">Testimonials</h1>
+            <Text color="#696969" className="font-normal text-base leading-6 tracking-[0%] mt-2 mb-8 text-center px-4">
+              Nulla quis curabitur velit volutpat auctor bibendum consectetur sit.
+            </Text>
           </div>
 
+          <div className="md:hidden px-4 mb-36">
 
-          <ItemCard sliderConfig={{
-            centerMode: false
-          }} cardStyles={{
-            marginRight: '20px'
-          }} className="h-auto  bg-transparent  "
-            items={[1, 2, 3, 4].map((_, index) => <div key={index} className="relative mb-36">
-              <div className="bg-white  shadow-[0px_10px_50px_0px_#0D263B1A]  mb-12  mx-5 px-12 py-10 ">
-                <Text color="#696969" >
-                  &quot; I believe in lifelong learning and Skola is a great place to learn from experts. I&apos;ve learned a lot and recommend it to all my friends &quot;
-                </Text>
+            <ItemCard
 
-                <div className="flex absolute  -bottom-9 left-1/3  justify-center items-center flex-col">
-                  <Image width={100} height={100} className="w-10 h-10 rounded-full  " src={userImg} alt="user" />
-                  <Text color="#0D263B" className="font-semibold text-base leading-6 tracking-[0%] mt-4 mb-1 text-center">
-                    Marvin McKinney
-                  </Text>
-                  <Text color="#696969" className="font-normal text-base leading-6 tracking-[0%] text-center">Designer</Text>
+              cardStyles={{
+                marginRight: "20px",
+              }}
+              className="h-auto bg-transparent"
+              items={[1, 2, 3, 4].map((_, index) => (
+                <div key={index} className="relative mb-36 px-4">
+                  <div className="bg-white shadow-[0px_10px_50px_0px_#0D263B1A] mb-12 mx-5 px-8 md:px-12 py-8 md:py-10 rounded-lg">
+                    <Text color="#696969" className="text-center">
+                      &quot; I believe in lifelong learning and Skola is a great place to learn from experts. I&apos;ve
+                      learned a lot and recommend it to all my friends &quot;
+                    </Text>
+
+                    <div className="flex flex-col items-center mt-8 md:absolute md:-bottom-9 md:left-0 md:right-0">
+                      <Image
+                        width={100}
+                        height={100}
+                        className="w-16 h-16 rounded-full"
+                        src={userImg || "/placeholder.svg"}
+                        alt="user"
+                      />
+                      <Text
+                        color="#0D263B"
+                        className="font-semibold text-base leading-6 tracking-[0%] mt-4 mb-1 text-center"
+                      >
+                        Marvin McKinney
+                      </Text>
+                      <Text color="#696969" className="font-normal text-base leading-6 tracking-[0%] text-center">
+                        Designer
+                      </Text>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>)} slider>
-          </ItemCard>
+              ))}
+              slider
+            />
+          </div>
+
+          {/* Desktop Testimonials (Slider) */}
+          <div className="hidden md:block">
+            <ItemCard
+
+              cardStyles={{
+                marginRight: "20px",
+              }}
+              className="h-auto bg-transparent"
+              items={[1, 2, 3, 4].map((_, index) => (
+                <div key={index} className="relative mb-36 px-4">
+                  <div className="bg-white shadow-[0px_10px_50px_0px_#0D263B1A] mb-12 mx-5 px-8 md:px-12 py-8 md:py-10 rounded-lg">
+                    <Text color="#696969" className="text-center">
+                      &quot; I believe in lifelong learning and Skola is a great place to learn from experts. I&apos;ve
+                      learned a lot and recommend it to all my friends &quot;
+                    </Text>
+
+                    <div className="flex flex-col items-center mt-8 md:absolute md:-bottom-9 md:left-0 md:right-0">
+                      <Image
+                        width={100}
+                        height={100}
+                        className="w-16 h-16 rounded-full"
+                        src={userImg || "/placeholder.svg"}
+                        alt="user"
+                      />
+                      <Text
+                        color="#0D263B"
+                        className="font-semibold text-base leading-6 tracking-[0%] mt-4 mb-1 text-center"
+                      >
+                        Marvin McKinney
+                      </Text>
+                      <Text color="#696969" className="font-normal text-base leading-6 tracking-[0%] text-center">
+                        Designer
+                      </Text>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              slider
+            />
+          </div>
         </Container>
       </div>
 

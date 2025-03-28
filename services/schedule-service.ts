@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import api from '@/lib/axios';
 import type { Property, PropertyFormData } from '@/types';
 
@@ -35,6 +36,15 @@ export const ScheduleService = {
 	getScheduleById: async (id: number | string): Promise<Property> => {
 		try {
 			const response = await api.get<Property>(`/uy/get_schedule/${id}/`);
+			return response.data;
+		} catch (error) {
+			console.error(`Error fetching schedule ${id}:`, error);
+			throw error;
+		}
+	},
+	getCategoryById: async (id: number | string | any): Promise<Property> => {
+		try {
+			const response = await api.get<Property>(`/uy/get_category_by_id/${id}/`);
 			return response.data;
 		} catch (error) {
 			console.error(`Error fetching schedule ${id}:`, error);

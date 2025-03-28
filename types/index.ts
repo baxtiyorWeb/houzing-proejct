@@ -85,3 +85,9 @@ export interface ApiResponse<T> {
 	status: number;
 	message?: string;
 }
+export interface Review {
+	message?: string;
+	email?: string;
+	name?: string;
+	schedule?: string;
+}
