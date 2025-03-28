@@ -2,8 +2,10 @@
 "use client"
 
 import axios from "@/lib/axios"
+import { CategoryService } from "@/services/category-services"
+import { Category } from "@/types"
 import { Upload } from "lucide-react"
-import { useState, type ChangeEvent, type FormEvent, type ReactNode } from "react"
+import { useEffect, useState, type ChangeEvent, type FormEvent, type ReactNode } from "react"
 
 const Text = ({ children, className = "" }: { children?: ReactNode; className?: string | null | any }) => {
   return <div className={`font-semibold text-lg leading-7 tracking-[0%] text-[] ${className}`}>{children}</div>
@@ -30,6 +32,24 @@ export default function PropertyForm() {
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitResult, setSubmitResult] = useState<{ success: boolean; message: string } | null>(null)
+
+  const [categories, setCategories] = useState<Category[]>([])
+
+  useEffect(() => {
+    try {
+      const getCategories = async () => {
+        const res = await CategoryService.getAllCategories()
+        console.log(res);
+        setCategories(res)
+
+      }
+
+      getCategories()
+    } catch (error) {
+      console.log(error);
+
+    }
+  }, [])
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -143,9 +163,11 @@ export default function PropertyForm() {
                 className="border-b focus:outline-none focus:border-blue-500 py-2"
                 required
               >
-                <option value="1">Category 1</option>
-                <option value="2">Category 2</option>
-                <option value="3">Category 3</option>
+                {
+                  categories?.map((item: { id: number, name: string }, index) => (
+                    <option value={item?.id} key={index}>{item?.name}</option>
+                  ))
+                }
               </select>
             </div>
 

@@ -1,6 +1,7 @@
 "use client"
 
 import { Badge } from "@/components/ui/Badge"
+import Button from "@/components/ui/Button"
 import { Buttons } from "@/components/ui/Button2"
 import Input from "@/components/ui/Input"
 import { Edit, Search, Trash2 } from 'lucide-react'
@@ -107,6 +108,11 @@ export default function MyPropertiesPage() {
 
   return (
     <div className="container mx-auto py-8 px-4">
+      <div className="flex justify-end items-center mb-3">
+        <Button onClick={() => router.push("/properties/create")}>
+          Add Property
+        </Button>
+      </div>
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
         <h1 className="text-2xl font-bold text-[#0D263B] mb-4 md:mb-0">My properties</h1>
         <div className="relative w-full md:w-auto">

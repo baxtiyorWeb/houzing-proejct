@@ -94,6 +94,7 @@ const Header = () => {
       </header>
       <Container>
         {pathname !== "/profile" && <Filternavigation />}
+
       </Container>
     </>
   )
